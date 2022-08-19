@@ -20,7 +20,7 @@ var second = 0
 function timer()
  {
    second = second + 1;
-   $("#timer").html(second);
+   document.getElementById("start").innerHTML = second;
  }
 setInterval(timer, 1000);
 </script>
