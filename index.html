@@ -20,7 +20,7 @@ var second = 0
 function timer()
  {
    second = second + 1;
-   $("#timer").html(saat + " : " + dakika + " : " + saniye);
+   $("#timer").html(second);
  }
 $(document).ready(function(){
    setInterval(timer, 1000);
