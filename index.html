@@ -7,6 +7,8 @@ Start Time: <span id="start"></span><br>
 Last Time:  <span id="clock"></span>
 <hr>
 <span id="timer"></span>
+<hr>
+<span id="timer2"></span>
 <script>
 setInterval(myTimer, 1000);
 const d = new Date();
@@ -22,7 +24,10 @@ function timer()
  {
    second = second + 1;
    document.getElementById("timer").innerHTML = second;
- }
+   if(second == 4)
+   {
+    setInterval(timer, 1000);
+   }
 setInterval(timer, 1000);
 </script>
 </body>
