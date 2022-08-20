@@ -24,16 +24,13 @@ function timer()
  {
    second = second + 1;
    document.getElementById("timer").innerHTML = second;
-   if(second == 4)
-   {
-    setInterval(timer2, 1000);
-   }
  }
   function timer2()
  {
    second = second + 1;
    document.getElementById("timer2").innerHTML = second;
  }
+setTimeout(timer2, 6000);
 setInterval(timer, 1000);
 </script>
 </body>
