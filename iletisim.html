@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RFC0T77G60"></script>
+<script>
+
+  <!-- Google Tag Manager -->
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KXXFDP7');</script>
+<!-- End Google Tag Manager -->
+</script>
+</head>
+<body>
+
+<h1>Crawl Test</h1>
+  <a href="tel:+905000000000"> +90 500 000 0000</a>
+Start Time: <span id="start"></span><br>
+Last Time:  <span id="clock"></span>
+<hr>
+<span id="timer"></span>
+<hr>
+<span id="timer2"></span>
+<script>
+setInterval(myTimer, 1000);
+const d = new Date();
+document.getElementById("start").innerHTML = d.toLocaleTimeString();
+
+function myTimer() {
+  const d = new Date();
+  document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+}
+
+var second = 0
+function timer()
+ {
+   second = second + 1;
+   document.getElementById("timer").innerHTML = second;
+ }
+  function timer2()
+ {
+   second = second + 1;
+   document.getElementById("timer2").innerHTML = second;
+ }
+setTimeout(timer2, 6000);
+setInterval(timer, 1000);
+</script>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXXFDP7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+</body>
+</html>
