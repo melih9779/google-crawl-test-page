@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category Text Generator</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    .main {
+      text-align: -webkit-center;
+      display: flex;
+      justify-content: center;
+    }
+    .content {
+      margin-top: 15px;
+      max-width: 1200px;
+      min-width: 720px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    .category-body, .body-area,.category-head {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: 1.625rem;
+      font-family: Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+      font-weight: 400;
+    }
+    .description{
+      height: 100px;
+    }
+    .generate, #htmlCode{
+      margin-top:22px;
+    }
+    textarea, input{
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      font-size: 16px;
+      line-height: 28px;
+      padding: 8px 0px 9px 9px;
+      width: 100%;
+      min-height: 25px;
+      border: unset;
+      border-radius: 4px;
+      outline-color: rgb(84 105 212 / 0.5);
+      background-color: rgb(255, 255, 255);
+      box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+    }
+    button{
+    border: unset;
+    border-radius: 4px;
+    outline-color: rgb(84 105 212 / 0.5);
+    background-color: #3f50ff;
+    line-height: 27px;
+    font-size: 16px;
+    color: #ffff;
+    padding: 0.3em;
+    }
+  </style>
+  <script type="text/javascript">
+
+    function crateBodyElement(lineNumber){
+      let element = document.createElement("div");
+      element.className= "body-area";
+      element.id = "body-" + lineNumber;
+      
+      imgInputElement = document.createElement('input')
+      imgInputElement.id = "body-img-" + lineNumber;
+      imgInputElement.placeholder = "Image URL"
+
+      H3InputElement = document.createElement('textarea')
+      H3InputElement.id = "bodyH3-" + lineNumber;
+      H3InputElement.placeholder = "H3"
+      
+      descriptionInputElement = document.createElement('textarea')
+      descriptionInputElement.id = "bodyDescription-" + lineNumber;
+      descriptionInputElement.className= "description";
+      descriptionInputElement.placeholder = "Description"
+
+      deleteButton = document.createElement('button')
+      deleteButton.append('Delete Item')
+      deleteButton.onclick = function(){
+        deleteItem(lineNumber)
+      };
+
+      element.append(imgInputElement,H3InputElement,descriptionInputElement,deleteButton)
+      return element
+
+    }
+
+
+    let lineCount = 1;
+    function addCategoryItem(){
+      lineCount++;
+      $('.category-body').append(crateBodyElement(lineCount))
+    }
+
+    function generateHTML(){
+      let categoryName = $('#catTitle').val();
+      let section = document.createElement('section');
+      section.className= "category-description";
+
+      article = document.createElement('article');
+
+      descriptionHead = document.createElement('div');
+      descriptionHead.className= "description-head";
+      
+      descriptionHeadH2 = document.createElement('h2');
+      descriptionHeadH2.className = "description-title";
+      descriptionHeadH2.append(categoryName)
+
+      descriptionText = document.createElement('p')
+      descriptionText.className= "description-text";
+
+      descriptionHead.append(descriptionHeadH2,descriptionText)
+
+      article.append(descriptionHead,descriptionText)
+      section.append(article)
+
+
+      countElement = $('.category-body div').length
+
+      for(let i=0; i<countElement; i++){
+        let index = '';
+        index = $('.category-body .body-area')[i].children[0].id;
+        index = index.split('-')[2];
+        console.log(index);
+        
+        descriptionBody = document.createElement('div');
+        descriptionBody.className = "description-body";
+
+        bodyImage = document.createElement('img');
+        bodyImage.className = "description-image";
+        bodyImage.alt = categoryName;
+        bodyImage.src =  $('#body-img-' + index).val();
+
+        bodyH3 = document.createElement('h3');
+        bodyH3.className = "description-title";
+        bodyH3.append($('#bodyH3-' + index).val())
+
+        bodyP = document.createElement('p');
+        bodyP.className = "description-text";
+        bodyP.append($('#bodyDescription-' + index).val())
+        
+        descriptionBody.append(bodyImage,bodyH3,bodyP)
+        article.append(descriptionBody)
+      }
+
+      section.append(article)
+      $('#htmlCode').val(section.outerHTML);
+    }
+    function deleteItem(id){
+      $('#body-' + id).remove()
+    }
+
+    function copyHTML(){
+      $("#htmlCode").select();
+      document.execCommand('copy');
+    }
+    
+  </script>
+
+</head>
+<body>
+
+  <div class="main">
+    <div class="content">
+      <h1>Akrep Category Text Generator</h1>
+      <div class="category-head">
+        <textarea placeholder="Description Title" id="catTitle" rows="1"></textarea>
+        <textarea class="description" placeholder="Description" id="catDescription" rows="1"></textarea>
+      </div>
+      <div class="category-body">
+        <div class="body-area" id="body-1">
+          <input type="text" placeholder="img URL" id="body-img-1">
+          <textarea placeholder="H3 Title" id="bodyH3-1" rows="1"></textarea>
+          <textarea class="description" placeholder="Description" id="bodyDescription-1" rows="1"></textarea>
+          <button onclick="deleteItem(1)">Delete Item</button>
+        </div>
+      </div>
+  
+      <div class="generate">
+        <button onclick="addCategoryItem()">Add Category Item</button>
+        <button onclick="generateHTML()">Generate HTML</button>
+        <button onclick="copyHTML()">Copy HTML</button>
+        <textarea placeholder="HTML CODE" id="htmlCode"></textarea>
+      </div>
+    </div>
+   
+    
+  </div>
+</body>
+</html>
