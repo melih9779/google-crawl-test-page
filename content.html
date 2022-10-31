@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +19,7 @@
     .content {
       margin-top: 15px;
       max-width: 1200px;
-      min-width: 720px;
+      min-width: 1200px;
       padding: 30px;
       box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
       transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -71,7 +71,7 @@
       let element = document.createElement("div");
       element.className= "body-area";
       element.id = "body-" + lineNumber;
-      
+
       imgInputElement = document.createElement('input')
       imgInputElement.id = "body-img-" + lineNumber;
       imgInputElement.placeholder = "Image URL"
@@ -79,7 +79,7 @@
       H3InputElement = document.createElement('textarea')
       H3InputElement.id = "bodyH3-" + lineNumber;
       H3InputElement.placeholder = "H3"
-      
+
       descriptionInputElement = document.createElement('textarea')
       descriptionInputElement.id = "bodyDescription-" + lineNumber;
       descriptionInputElement.className= "description";
@@ -112,13 +112,14 @@
 
       descriptionHead = document.createElement('div');
       descriptionHead.className= "description-head";
-      
+
       descriptionHeadH2 = document.createElement('h2');
       descriptionHeadH2.className = "description-title";
       descriptionHeadH2.append(categoryName)
 
       descriptionText = document.createElement('p')
       descriptionText.className= "description-text";
+      descriptionText.innerHTML = $('#catDescription').val()
 
       descriptionHead.append(descriptionHeadH2,descriptionText)
 
@@ -133,7 +134,7 @@
         index = $('.category-body .body-area')[i].children[0].id;
         index = index.split('-')[2];
         console.log(index);
-        
+
         descriptionBody = document.createElement('div');
         descriptionBody.className = "description-body";
 
@@ -148,8 +149,8 @@
 
         bodyP = document.createElement('p');
         bodyP.className = "description-text";
-        bodyP.append($('#bodyDescription-' + index).val())
-        
+        bodyP.innerHTML = $('#bodyDescription-' + index).val()
+
         descriptionBody.append(bodyImage,bodyH3,bodyP)
         article.append(descriptionBody)
       }
@@ -165,7 +166,7 @@
       $("#htmlCode").select();
       document.execCommand('copy');
     }
-    
+
   </script>
 
 </head>
@@ -186,7 +187,7 @@
           <button onclick="deleteItem(1)">Delete Item</button>
         </div>
       </div>
-  
+
       <div class="generate">
         <button onclick="addCategoryItem()">Add Category Item</button>
         <button onclick="generateHTML()">Generate HTML</button>
@@ -194,8 +195,8 @@
         <textarea placeholder="HTML CODE" id="htmlCode"></textarea>
       </div>
     </div>
-   
-    
+
+
   </div>
 </body>
 </html>
