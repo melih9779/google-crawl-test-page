@@ -55,14 +55,21 @@
       box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
     }
     button{
-    border: unset;
-    border-radius: 4px;
-    outline-color: rgb(84 105 212 / 0.5);
-    background-color: #3f50ff;
-    line-height: 27px;
-    font-size: 16px;
-    color: #ffff;
-    padding: 0.3em;
+      border: unset;
+      border-radius: 4px;
+      outline-color: rgb(84 105 212 / 0.5);
+      background-color: #3f50ff;
+      line-height: 27px;
+      font-size: 16px;
+      color: #ffff;
+      padding: 0.3em;
+    }
+
+    button:hover{
+      background-color: #ffffff;
+      color: #009ac9;
+      border-color: #009ac9;
+      transition: all 0.3s ease-in-out;
     }
   </style>
   <script type="text/javascript">
@@ -120,7 +127,7 @@
       descriptionText = document.createElement('p')
       descriptionText.className= "description-text";
       descriptionText.innerHTML = $('#catDescription').val()
-
+      ///descriptionText.innerHTML = $('#catDescription').val().replace(/\n/g,'<p class="description-text">')
       descriptionHead.append(descriptionHeadH2,descriptionText)
 
       article.append(descriptionHead,descriptionText)
