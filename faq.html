@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akrep Kategori Metni Şablonu Oluşturma</title>
+  <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    .main {
+      text-align: -webkit-center;
+      display: flex;
+      justify-content: center;
+    }
+    .content {
+      margin-top: 15px;
+      min-width: 900px;
+      max-width: 1200px;
+      padding: 30px;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    .category-body, .body-area,.category-head {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-size: 1.625rem;
+      font-family: Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+      font-weight: 400;
+    }
+    .description{
+      height: 100px;
+    }
+    .generate, #htmlCode{
+      margin-top:22px;
+    }
+    textarea, input{
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      font-size: 16px;
+      line-height: 28px;
+      padding: 8px 0px 9px 9px;
+      width: 100%;
+      min-height: 25px;
+      border: unset;
+      border-radius: 4px;
+      outline-color: rgb(84 105 212 / 0.5);
+      background-color: rgb(255, 255, 255);
+      box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+    }
+    button{
+      border: unset;
+      border-radius: 4px;
+      outline-color: rgb(84 105 212 / 0.5);
+      background-color: #3f50ff;
+      line-height: 27px;
+      font-size: 16px;
+      color: #ffff;
+      padding: 0.3em;
+    }
+
+    button:hover{
+      background-color: #ffffff;
+      color: #009ac9;
+      border-color: #009ac9;
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+  <script type="text/javascript">
+
+    function crateBodyElement(lineNumber){
+      let element = document.createElement("div");
+      element.className= "body-area";
+      element.id = "body-" + lineNumber;
+
+
+      H3InputElement = document.createElement('textarea')
+      H3InputElement.id = "label-" + lineNumber;
+      H3InputElement.placeholder = "SSS Başlığı"
+
+      descriptionInputElement = document.createElement('textarea')
+      descriptionInputElement.id = "content-" + lineNumber;
+      descriptionInputElement.className= "description";
+      descriptionInputElement.placeholder = "SSS Açıklaması"
+
+      deleteButton = document.createElement('button')
+      deleteButton.append('Soruyu Sil')
+      deleteButton.onclick = function(){
+        deleteItem(lineNumber)
+      };
+
+      element.append(H3InputElement,descriptionInputElement,deleteButton)
+      return element
+
+    }
+
+
+    let lineCount = 1;
+    function addCategoryItem(){
+      lineCount++;
+      $('.category-body').append(crateBodyElement(lineCount))
+    }
+
+    function generateHTML(){
+
+      countElement = $('.category-body div').length;
+      let FAQschema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+        ]
+      }
+
+      $('#htmlCode').val("");
+      for(let i=0; i<countElement; i++){
+        let index,label,labelContent;
+        index = $('.category-body .body-area')[i].children[0].id;
+        index = index.split('-')[1];
+
+        label = $('#label-' + index).val();
+        labelContent = $('#content-' + index).val();
+
+        FAQschema["mainEntity"].push({
+        "@type": "Question",
+        "name": label,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": labelContent
+            },
+        })
+
+        descriptionBody = document.createElement('div');
+        descriptionBody.className = "tab";
+
+        inputRadio = document.createElement('input');
+        inputRadio.type = "radio";
+        inputRadio.id = "rd" + index;
+        inputRadio.name = "rd";
+        if(i == 0){
+            inputRadio.checked = true;
+        }
+
+        tabLabel = document.createElement('label');
+        tabLabel.className = "tab-label";
+        tabLabel.setAttribute("for", "rd" + index);
+        tabLabel.innerHTML = label;
+
+
+        tabContent = document.createElement('div');
+        tabContent.className = "tab-content";
+        tabContent.innerHTML = labelContent;
+
+        descriptionBody.append(inputRadio,tabLabel,tabContent)
+        $('#htmlCode').val($('#htmlCode').val()+descriptionBody.outerHTML)
+      }
+      
+      schema = document.createElement("script");
+      schema.setAttribute("type", "application/ld+json");
+      schema.append(JSON.stringify(FAQschema));
+      
+      $('#htmlCode').val($('#htmlCode').val()+schema.outerHTML)
+    }
+    function deleteItem(id){
+      $('#body-' + id).remove()
+    }
+
+    function copyHTML(){
+      $("#htmlCode").select();
+      document.execCommand('copy');
+    }
+
+  </script>
+
+</head>
+<body>
+
+  <div class="main">
+    <div class="content">
+      <h1>Akrep FAQ Metin Şablonu Oluşturma</h1>
+      <div class="category-body">
+        <div class="body-area" id="body-1">
+          <textarea placeholder="SSS Başlığı" id="label-1" rows="1"></textarea>
+          <textarea placeholder="SSS Açıklaması" class="description"  id="content-1" rows="1"></textarea>
+          <button onclick="deleteItem(1)">Soruyu Sil</button>
+        </div>
+      </div>
+
+      <div class="generate">
+        <button onclick="addCategoryItem()">Soru Ekle</button>
+        <button onclick="generateHTML()"> HTML Oluştur</button>
+        <button onclick="copyHTML()"> HTML'i Kopyala</button>
+        <textarea placeholder="HTML CODE" id="htmlCode"></textarea>
+      </div>
+    </div>
+
+
+  </div>
+</body>
+</html>
