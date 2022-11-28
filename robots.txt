@@ -1,11 +1,2 @@
-messagemessagemessagemessagemessagemessagemessagemessagemessagemessage
-message
-messagemessagev
-message
-message
-messagemessage
-messagemessagemessagemessagemessage
-messagemessagemessage
-v
-messagemessagemessage
-123
+user-agent:*
+disallow: /kategori/*/*/Kadin/*/*/*fid=*_*
